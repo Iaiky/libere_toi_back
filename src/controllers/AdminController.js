@@ -3,11 +3,11 @@ var db = require("../configs/connect")
 
 module.exports = {
     getAll : (req, res, next) => {
-        var sql = "select * from admin"
+        var sql = "select * from client"
         var params = []
-        db.query(sql, params, (err, result) => {
+        db.query(sql, params, (err, rows, field) => {
             if (!err) {
-                res.send(result.rows)
+                res.send(rows)
             }
           });
     },
@@ -98,7 +98,7 @@ module.exports = {
         }
         var data = {
             email: req.body.email,
-            password : md5(req.body.password)
+            password : req.body.password
         }
         var sql ='SELECT * FROM user WHERE email=? and password=? and validation = 1'
         var params =[data.email, data.password]
