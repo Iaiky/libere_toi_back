@@ -19,9 +19,15 @@ const port = 3000
 //routes
 const adminRoute = require("./src/routes/Admin")
 const clientRoute = require("./src/routes/Client")
+const vendeurRoute = require("./src/routes/Vendeur")
+const categorieRoute = require("./src/routes/Categorie")
 
 app.use('/admins', adminRoute);
 app.use('/clients', clientRoute);
+app.use('/vendeur', vendeurRoute);
+app.use('/categorie', categorieRoute);
+
+
 
 // Start server
 app.listen(port, () => {
