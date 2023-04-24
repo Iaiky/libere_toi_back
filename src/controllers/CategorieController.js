@@ -97,4 +97,23 @@ module.exports = {
         });
     },
 
+    //liste 
+    listerNom : (req, res, next) => {
+        var sql = "select categorie, titre FROM categorie"
+        db.query(sql, function (err, rows, field) {
+            if (err){
+                res.status(400).json({"error": err.message})
+                return;
+            }
+            if(rows.length === 0) {   
+                res.status(400).send("No Match")
+                return;          
+            }
+            res.json({
+                "message": "success",
+                "data": rows
+            })
+        });
+    },
+
 }

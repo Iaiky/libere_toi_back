@@ -22,6 +22,16 @@ module.exports = {
           });
     },
 
+    //Get a single vendeur by id
+    getImg : (req, res, next) => {
+        var sql = 'select source from image where idphoto = 9'
+        db.query(sql, (err, rows, field) => {
+            if (!err) {
+                res.send(rows)
+            }
+          });
+    },
+
     //update a new vendeur
     // put : (req, res, next) => {
     //     var data = {

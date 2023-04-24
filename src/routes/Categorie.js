@@ -6,6 +6,7 @@ const controller = require("../controllers/CategorieController")
 //list of categorie
 router.get("/", controller.getAll);
 router.get("/listeCategorie", controller.lister);
+router.get("/listeNomCategorie", controller.listerNom);
 
 //Get a single categorie by id
 router.get("/:id", controller.get);

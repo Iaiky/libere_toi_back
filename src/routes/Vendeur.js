@@ -5,6 +5,7 @@ const controller = require("../controllers/VendeurController")
 
 //list of vendeur
 router.get("/", controller.getAll);
+router.get("/img", controller.getImg);
 
 //Get a single vendeur by id
 router.get("/:id", controller.get);
