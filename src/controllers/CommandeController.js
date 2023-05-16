@@ -5,7 +5,7 @@ var db = require("../configs/connect")
 // Get all user
 module.exports = {
     getAll : (req, res, next) => {
-        var sql = "select * from user"
+        var sql = "select * from commande order by idcommande desc"
         var params = []
         db.query(sql, params, (err, rows, field) => {
             if (!err) {
@@ -14,9 +14,49 @@ module.exports = {
           });
     },
 
-    //Get 4 services by idvendeur
+    getCommandeClientList : (req, res, next) => {
+        var sql = `select * from commande where client = ${req.params.id} order by idcommande desc`
+        var params = []
+        db.query(sql, params, (err, rows, field) => {
+            if (!err) {
+                res.send(rows)
+            }
+          });
+    },
+
+    getValidClientList : (req, res, next) => {
+        var sql = `select * from commande where validationPaiementClient = 0 and client = ${req.params.id} and validationVendeur=1 order by idcommande desc`
+        var params = []
+        db.query(sql, params, (err, rows, field) => {
+            if (!err) {
+                res.send(rows)
+            }
+          });
+    },
+
+    getValidVendeurList : (req, res, next) => {
+        var sql = `select * from commande where validationVendeur = 0 and vendeur = ${req.params.id} order by idcommande desc`
+        var params = []
+        db.query(sql, params, (err, rows, field) => {
+            if (!err) {
+                res.send(rows)
+            }
+          });
+    },
+
+    getValidationList : (req, res, next) => {
+        var sql = "select * from commande where validation = 0 order by idcommande desc"
+        var params = []
+        db.query(sql, params, (err, rows, field) => {
+            if (!err) {
+                res.send(rows)
+            }
+          });
+    },
+
+    //Get a single service by id
     get : (req, res, next) => {
-        var sql = `Select service.idservice, service.titre, service.description, service.prix, service.delai, service.consigne, service.image_source, categorie.titre as categorie, user.prenom 
+        var sql = `Select service.idcommande, service.titre, service.description, service.prix, service.delai, service.consigne, service.image_source, categorie.titre as categorie, user.prenom 
         from ((service 
             inner join categorie on service.idcategorie = categorie.categorie)
             inner join user on service.idvendeur = user.iduser) 
@@ -28,88 +68,28 @@ module.exports = {
           });
     },
 
-    //liste 
-    listerNom : (req, res, next) => {
-        var sql = "select idservice, titre FROM service"
-        db.query(sql, function (err, rows, field) {
-            if (err){
-                res.status(400).json({"error": err.message})
-                return;
-            }
-            if(rows.length === 0) {   
-                res.status(400).send("No Match")
-                return;          
-            }
-            res.json({
-                "message": "success",
-                "data": rows
-            })
-        });
-    },
-
-    //vendeur get en fonction de idservice
-    vendeurNom : (req, res, next) => {
-        var sql = `select service.idvendeur, concat( user.nom,' ',usr.prenom) as nom from service 
-        inner join user as user on service.idvendeur = user.iduser
-        inner join user as usr on service.idvendeur = usr.iduser
-        where idservice = ${req.params.id}`
-        db.query(sql, function (err, rows, field) {
-            if (err){
-                res.status(400).json({"error": err.message})
-                return;
-            }
-            if(rows.length === 0) {   
-                res.status(400).send("No Match")
-                return;          
-            }
-            res.json({
-                "message": "success",
-                "data": rows
-            })
-        });
-    },
-
-    //Create a new user
+    //Create a new commande
     post : (req, res, next) => {
         var errors=[]
         if (!req.body.description){
             errors.push("No description specified");
         }
-        if (!req.body.idcategorie){
-            errors.push("No idcategorie specified");
-        }
-        if (!req.body.titre){
-            errors.push("No titre specified");
-        }
-        if (!req.body.prix){
-            errors.push("No prix specified");
-        }
-        if (!req.body.delai){
-            errors.push("No delai specified");
-        }
-        if (!req.body.consigne){
-            errors.push("No consigne specified");
+        if (!req.body.idservice){
+            errors.push("No idservice specified");
         }
         if (!req.body.idvendeur){
             errors.push("No idvendeur specified");
         }
-        if (!req.body.image_source){
-            errors.push("No image_source specified");
-        }
         
         var data = {
             description: req.body.description,
-            idcategorie: req.body.idcategorie,
-            titre: req.body.titre,
-            prix: req.body.prix,
-            delai: req.body.delai,
-            consigne: req.body.consigne,
-            idvendeur: req.body.idvendeur,
-            image_source: req.body.image_source,          
+            client: req.body.client,      
+            idvendeur: req.body.idvendeur, 
+            idservice: req.body.idservice,              
         }
 
-        var sql =`INSERT INTO service(description, idcategorie, titre, prix, delai, consigne, idvendeur, image_source) 
-                    VALUES ( '${data.description}', ${data.idcategorie}, '${data.titre}', ${data.prix}, '${data.delai}', '${data.consigne}', ${data.idvendeur}, 'http://localhost:3000/uploads/${data.image_source}')`
+        var sql =`insert into commande(client, vendeur, service, dateCreation, motif) 
+            values (${data.client}, ${data.idvendeur}, ${data.idservice}, curdate(), '${data.description}');`
         db.query(sql, function (err, rows, field) {
             if (!err){
                 res.send('Insertion was successful')

@@ -1,18 +1,19 @@
 const express = require('express')
 const router = express.Router();
 
-const controller = require("../controllers/ServiceController")
+const controller = require("../controllers/CommandeController")
 
-//list of service
+//list of commande
 router.get("/", controller.getAll);
-router.get("/listeNom", controller.listerNom);
-router.get("/vendeurNom/:id", controller.vendeurNom);
-// router.get("/unvalidList", controller.getUnvalidList);
+router.get("/validation", controller.getValidationList);
 
-//Get a single service by id
+//Get a single commande by id
+router.get("/commandeClient/:id", controller.getCommandeClientList);
+router.get("/validClient/:id", controller.getValidClientList);
+router.get("/validVendeur/:id", controller.getValidVendeurList);
 router.get("/:id", controller.get);
 
-//Create a new service
+//Create a new commande
 router.post("/", controller.post);
 
 //Update a user
