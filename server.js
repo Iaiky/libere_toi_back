@@ -39,16 +39,23 @@ const clientRoute = require("./src/routes/Client")
 const vendeurRoute = require("./src/routes/Vendeur")
 const categorieRoute = require("./src/routes/Categorie")
 const serviceRoute = require("./src/routes/Service")
-const uploadFileRoute = require("./src/routes/UploadFile")
 const commandeRoute = require("./src/routes/Commande")
+const messageRoute = require("./src/routes/Message")
+
+
+const uploadFileRoute = require("./src/routes/UploadFile")
+
 
 app.use('/admins', adminRoute);
 app.use('/clients', clientRoute);
 app.use('/vendeur', vendeurRoute);
 app.use('/service', serviceRoute);
 app.use('/categorie', categorieRoute);
-app.use('/upload', upload.single("file"), uploadFileRoute);
 app.use('/commande', commandeRoute);
+app.use('/message', messageRoute);
+
+app.use('/upload', upload.single("file"), uploadFileRoute);
+
 
 // static file 
 app.use(express.static('src'));

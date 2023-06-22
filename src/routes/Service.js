@@ -7,6 +7,7 @@ const controller = require("../controllers/ServiceController")
 router.get("/", controller.getAll);
 router.get("/listeNom", controller.listerNom);
 router.get("/vendeurNom/:id", controller.vendeurNom);
+router.get("/categorie/:id", controller.categorie);
 // router.get("/unvalidList", controller.getUnvalidList);
 
 //Get a single service by id

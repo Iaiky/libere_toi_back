@@ -47,6 +47,29 @@ module.exports = {
         });
     },
 
+    //liste 
+    categorie : (req, res, next) => {
+        var sql = `Select service.idservice, service.titre, service.description, service.prix, service.delai, service.consigne, service.image_source, categorie.titre as categorie, user.prenom 
+        from ((service 
+            inner join categorie on service.idcategorie = categorie.categorie)
+            inner join user on service.idvendeur = user.iduser) 
+        where idcategorie= ${req.params.id} order by idservice `
+        db.query(sql, function (err, rows, field) {
+            if (err){
+                res.status(400).json({"error": err.message})
+                return;
+            }
+            if(rows.length === 0) {   
+                res.status(400).send("No Match")
+                return;          
+            }
+            res.json({
+                "message": "success",
+                "data": rows
+            })
+        });
+    },
+
     //vendeur get en fonction de idservice
     vendeurNom : (req, res, next) => {
         var sql = `select service.idvendeur, concat( user.nom,' ',usr.prenom) as nom from service 
