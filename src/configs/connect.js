@@ -1,10 +1,10 @@
 const mysql = require('mysql')
 
 const connection = mysql.createConnection({
-  host:'localhost',
-  user:'root',
-  password:'root', //passxord null if locally
-  database:'libere_toi'
+  host:'bhsgtu3cpuow2xq73lwo-mysql.services.clever-cloud.com',
+  user:'ussgy6qj996njw2k',
+  password:'ussgy6qj996njw2k', //password null if locally
+  database:'bhsgtu3cpuow2xq73lwo'
 })
 
 
