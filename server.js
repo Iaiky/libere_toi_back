@@ -37,7 +37,7 @@ const upload = multer({
 const client = require('./src/configs/connect.js')
 
 // Server port
-const port = 3000
+const port = 3306
 
 
 //routes
