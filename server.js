@@ -9,6 +9,13 @@ app.use(bodyParser.json());
 let cors = require("cors");
 app.use(cors());
 
+// Express middleware to allow CORS
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "http://localhost:8080");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 // multer
 const multer = require('multer')
 
@@ -30,7 +37,7 @@ const upload = multer({
 const client = require('./src/configs/connect.js')
 
 // Server port
-const port = 3306
+const port = 3000
 
 
 //routes
