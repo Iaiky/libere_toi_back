@@ -15,7 +15,33 @@ module.exports = {
     },
 
     getCommandeClientList : (req, res, next) => {
-        var sql = `select * from commande where client = ${req.params.id} order by idcommande desc`
+        var sql = `SELECT 
+        commande.idcommande,commande.client,commande.vendeur,
+        commande.service,service.image_source,commande.motif,
+        commande.dateCreation,commande.validationVendeur,
+        commande.validationPaiementClient,commande.validation
+        FROM commande
+        INNER JOIN service ON commande.service = service.idservice
+        client = ${req.params.id}
+        ORDER BY idcommande DESC LIMIT 10 ;`
+        var params = []
+        db.query(sql, params, (err, rows, field) => {
+            if (!err) {
+                res.send(rows)
+            }
+          });
+    },
+
+    getCommandeVendeurList : (req, res, next) => {
+        var sql = `SELECT 
+        commande.idcommande,commande.client,commande.vendeur,
+        commande.service,service.image_source,commande.motif,
+        commande.dateCreation,commande.validationVendeur,
+        commande.validationPaiementClient,commande.validation
+        FROM commande
+        INNER JOIN service ON commande.service = service.idservice
+        vendeur = ${req.params.id}
+        ORDER BY idcommande DESC LIMIT 10 ;`
         var params = []
         db.query(sql, params, (err, rows, field) => {
             if (!err) {

@@ -9,6 +9,7 @@ router.get("/validation", controller.getValidationList);
 
 //Get a single commande by id
 router.get("/commandeClient/:id", controller.getCommandeClientList);
+router.get("/commandeVendeur/:id", controller.getCommandeVendeurList);
 router.get("/validClient/:id", controller.getValidClientList);
 router.get("/validVendeur/:id", controller.getValidVendeurList);
 router.get("/:id", controller.get);
