@@ -22,7 +22,7 @@ module.exports = {
         commande.validationPaiementClient,commande.validation
         FROM commande
         INNER JOIN service ON commande.service = service.idservice
-        client = ${req.params.id}
+        where client = ${req.params.id}
         ORDER BY idcommande DESC LIMIT 10 ;`
         var params = []
         db.query(sql, params, (err, rows, field) => {
@@ -40,7 +40,7 @@ module.exports = {
         commande.validationPaiementClient,commande.validation
         FROM commande
         INNER JOIN service ON commande.service = service.idservice
-        vendeur = ${req.params.id}
+        where vendeur = ${req.params.id}
         ORDER BY idcommande DESC LIMIT 10 ;`
         var params = []
         db.query(sql, params, (err, rows, field) => {
