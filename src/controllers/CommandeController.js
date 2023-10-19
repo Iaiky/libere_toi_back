@@ -125,7 +125,7 @@ module.exports = {
     },
 
     //update a new user
-    // put : (req, res, next) => {
+    // livrer : (req, res, next) => {
     //     var data = {
     //         nom: req.body.nom,
     //         prenom: req.body.prenom,
@@ -148,17 +148,17 @@ module.exports = {
     //     })
     // },
 
-    // //delete a user
-    // delete : (req, res, next) => {
-    //     let sql = `delete from user where iduser=${req.params.id}`
+    //delete a user
+    delete : (req, res, next) => {
+        let sql = `delete from commande where idcommande=${req.params.id}`
 
-    //     db.query(sql, (err, rows, field)=>{
-    //     if(!err){
-    //         res.send('Deleted was successful')
-    //     }
-    //     else{ console.log(err.message) }
-    // })
-    // },
+        db.query(sql, (err, rows, field)=>{
+        if(!err){
+            res.send('Deleted was successful')
+        }
+        else{ console.log(err.message) }
+    })
+    },
     // //authentication
     // auth : (req, res, next) => {
     //     var errors=[]

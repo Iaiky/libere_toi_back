@@ -17,12 +17,12 @@ router.get("/:id", controller.get);
 //Create a new commande
 router.post("/", controller.post);
 
-//Update a user
-// router.patch("/add/:id", controller.add);
+//Update a commande
+router.patch("/vendeur/:id", controller.livrer);
 // router.put("/:id", controller.put);
 
-//Delete a user
-// router.delete("/:id", controller.delete);
+// Delete a user
+router.delete("/:id", controller.delete);
 
 //Authentication
 // router.post("/auth", controller.auth);

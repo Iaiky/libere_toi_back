@@ -55,8 +55,8 @@ module.exports = {
             type : req.body.type,
             CIN_Passeport : req.body.CIN_Passeport
         }
-        var sql =`INSERT INTO user(nom, prenom, email, tel, mdp, type, CIN_Passeport) 
-                    VALUES ( '${data.nom}', '${data.prenom}', '${data.email}', '${data.tel}', '${data.mdp}', ${data.type}, '${data.CIN_Passeport}' )`
+        var sql =`INSERT INTO user(nom, prenom, email, tel, mdp, type, CIN_Passeport, photoProfil) 
+                    VALUES ( '${data.nom}', '${data.prenom}', '${data.email}', '${data.tel}', '${data.mdp}', ${data.type}, '${data.CIN_Passeport}', 'no_image.png' )`
         db.query(sql, function (err, rows, field) {
             if (!err){
                 res.send('Insertion was successful')
