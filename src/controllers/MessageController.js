@@ -15,7 +15,7 @@ module.exports = {
     },
 
     getMP : (req, res, next) => {
-        var sql = `SELECT message.idmessage, message.receveur, concat( user.nom,' ',usr.prenom) as nom, us.photoProfil FROM message 
+        var sql = `SELECT message.idmessage, message.receveur, message.msg,concat( user.nom,' ',usr.prenom) as nom, us.photoProfil FROM message 
             inner join user as user on receveur = user.iduser 
             inner join user as usr on receveur = usr.iduser
             inner join user as us on receveur = usr.iduser
