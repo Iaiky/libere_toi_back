@@ -18,7 +18,7 @@ router.get("/:id", controller.get);
 router.post("/", controller.post);
 
 //Update a commande
-router.patch("/vendeur/:id", controller.livrer);
+// router.patch("/vendeur/:id", controller.livrer);
 // router.put("/:id", controller.put);
 
 // Delete a user
