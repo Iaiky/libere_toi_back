@@ -132,7 +132,7 @@ module.exports = {
         }
 
         var sql =`INSERT INTO service(description, idcategorie, titre, prix, delai, consigne, idvendeur, image_source) 
-                    VALUES ( '${data.description}', ${data.idcategorie}, '${data.titre}', ${data.prix}, '${data.delai}', '${data.consigne}', ${data.idvendeur}, 'http://localhost:3000/uploads/${data.image_source}')`
+                    VALUES ( '${data.description}', ${data.idcategorie}, '${data.titre}', ${data.prix}, '${data.delai}', '${data.consigne}', ${data.idvendeur}, 'https://libere-toi.onrender.com/uploads/${data.image_source}')`
         db.query(sql, function (err, rows, field) {
             if (!err){
                 res.send('Insertion was successful')
