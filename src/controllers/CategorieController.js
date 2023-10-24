@@ -28,7 +28,7 @@ module.exports = {
         if (!req.body.titre){
             errors.push("Pas de titre");
         }
-        if (!req.body.source){
+        if (!req.body.idphoto){
             errors.push("No source");
         }
         if (errors.length){
@@ -37,10 +37,10 @@ module.exports = {
         }
         var data = {
             titre: req.body.titre,
-            source: req.body.source,
+            idphoto: req.body.idphoto,
         }
-        var sql =`INSERT INTO categorie(titre, source) 
-                    VALUES ( '${data.titre}', '${data.source}' )`
+        var sql =`INSERT INTO categorie(titre, idphoto) 
+                    VALUES ( '${data.titre}', '${data.idphoto}' )`
         db.query(sql, function (err, rows, field) {
             if (!err){
                 res.send('Insertion was successful')

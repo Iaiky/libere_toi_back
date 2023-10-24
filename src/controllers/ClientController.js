@@ -72,14 +72,20 @@ module.exports = {
             prenom: req.body.prenom,
             email: req.body.email,
             mdp : req.body.mdp,
-            tel : req.body.tel
+            tel : req.body.tel,
+            type : req.body.type,
+            CIN_Passeport : req.body.CIN_Passeport,
+            photoProfil : req.body.photoProfil
         }
         let sql = `update user
                     set nom = '${data.nom}',
                     prenom = '${data.prenom}',
                     email = '${data.email}',
                     tel = '${data.tel}',
-                    mdp = '${data.mdp}'
+                    mdp = '${data.mdp}',
+                    type = '${data.type}',
+                    CIN_Passeport = '${data.CIN_Passeport}',
+                    photoProfil = '${data.photoProfil}'
                     where iduser = ${req.params.id}`
         db.query(sql, (err, rows, field)=>{
             if(!err){

@@ -74,7 +74,7 @@ module.exports = {
 
     //delete a user
     delete : (req, res, next) => {
-        let sql = `delete from admin where "idAdmin"=${req.params.id}`
+        let sql = `delete from user where "iduser"=${req.params.id}`
 
         db.query(sql, (err, result)=>{
         if(!err){
