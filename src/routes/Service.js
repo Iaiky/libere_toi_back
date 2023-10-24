@@ -20,8 +20,8 @@ router.post("/", controller.post);
 // router.patch("/add/:id", controller.add);
 // router.put("/:id", controller.put);
 
-//Delete a user
-// router.delete("/:id", controller.delete);
+//Delete a service
+router.delete("/:id", controller.delete);
 
 //Authentication
 // router.post("/auth", controller.auth);

@@ -30,7 +30,7 @@ module.exports = {
 
     //liste 
     listerNom : (req, res, next) => {
-        var sql = "select idservice, titre FROM service"
+        var sql = "select idservice, idvendeur, titre FROM service"
         db.query(sql, function (err, rows, field) {
             if (err){
                 res.status(400).json({"error": err.message})
@@ -165,17 +165,17 @@ module.exports = {
     //     })
     // },
 
-    // //delete a user
-    // delete : (req, res, next) => {
-    //     let sql = `delete from user where iduser=${req.params.id}`
+    //delete a user
+    delete : (req, res, next) => {
+        let sql = `delete from service where idservice=${req.params.id}`
 
-    //     db.query(sql, (err, rows, field)=>{
-    //     if(!err){
-    //         res.send('Deleted was successful')
-    //     }
-    //     else{ console.log(err.message) }
-    // })
-    // },
+        db.query(sql, (err, rows, field)=>{
+        if(!err){
+            res.send('Deleted was successful')
+        }
+        else{ console.log(err.message) }
+    })
+    },
     // //authentication
     // auth : (req, res, next) => {
     //     var errors=[]

@@ -81,18 +81,18 @@ module.exports = {
     },
 
     //Get a single service by id
-    get : (req, res, next) => {
-        var sql = `Select service.idcommande, service.titre, service.description, service.prix, service.delai, service.consigne, service.image_source, categorie.titre as categorie, user.prenom 
-        from ((service 
-            inner join categorie on service.idcategorie = categorie.categorie)
-            inner join user on service.idvendeur = user.iduser) 
-        where idvendeur= ${req.params.id} order by idservice desc limit 4`
-        db.query(sql, (err, rows, field) => {
-            if (!err) {
-                res.send(rows)
-            }
-          });
-    },
+    // get : (req, res, next) => {
+    //     var sql = `Select service.idcommande, service.titre, service.description, service.prix, service.delai, service.consigne, service.image_source, categorie.titre as categorie, user.prenom 
+    //     from ((service 
+    //         inner join categorie on service.idcategorie = categorie.categorie)
+    //         inner join user on service.idvendeur = user.iduser) 
+    //     where idvendeur= ${req.params.id} order by idservice desc limit 4`
+    //     db.query(sql, (err, rows, field) => {
+    //         if (!err) {
+    //             res.send(rows)
+    //         }
+    //       });
+    // },
 
     //Create a new commande
     post : (req, res, next) => {
@@ -124,29 +124,45 @@ module.exports = {
         });
     },
 
-    //update a new user
-    // livrer : (req, res, next) => {
-    //     var data = {
-    //         nom: req.body.nom,
-    //         prenom: req.body.prenom,
-    //         email: req.body.email,
-    //         mdp : req.body.mdp,
-    //         tel : req.body.tel
-    //     }
-    //     let sql = `update user
-    //                 set nom = '${data.nom}',
-    //                 prenom = '${data.prenom}',
-    //                 email = '${data.email}',
-    //                 tel = '${data.tel}',
-    //                 mdp = '${data.mdp}'
-    //                 where iduser = ${req.params.id}`
-    //     db.query(sql, (err, rows, field)=>{
-    //         if(!err){
-    //             res.send('Update was successful')
-    //         }
-    //         else{ console.log(err.message) }
-    //     })
-    // },
+    // update a new commande
+    clientValidation : (req, res, next) => {
+
+        let sql = `update commande
+                    set validationPaiementClient = '1',
+                    where idcommande = ${req.params.id}`
+        db.query(sql, (err, rows, field)=>{
+            if(!err){
+                res.send('Update was successful')
+            }
+            else{ console.log(err.message) }
+        })
+    },
+
+    vendeurValidation : (req, res, next) => {
+
+        let sql = `update commande
+                    set validationVendeur = '1',
+                    where idcommande = ${req.params.id}`
+        db.query(sql, (err, rows, field)=>{
+            if(!err){
+                res.send('Update was successful')
+            }
+            else{ console.log(err.message) }
+        })
+    },
+
+    Validation : (req, res, next) => {
+
+        let sql = `update commande
+                    set validation = '1',
+                    where idcommande = ${req.params.id}`
+        db.query(sql, (err, rows, field)=>{
+            if(!err){
+                res.send('Update was successful')
+            }
+            else{ console.log(err.message) }
+        })
+    },
 
     //delete a user
     delete : (req, res, next) => {
