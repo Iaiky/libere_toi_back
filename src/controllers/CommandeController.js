@@ -128,7 +128,7 @@ module.exports = {
     clientValidation : (req, res, next) => {
 
         let sql = `update commande
-                    set validationPaiementClient = '1',
+                    set validationPaiementClient = 1
                     where idcommande = ${req.params.id}`
         db.query(sql, (err, rows, field)=>{
             if(!err){
@@ -141,7 +141,7 @@ module.exports = {
     vendeurValidation : (req, res, next) => {
 
         let sql = `update commande
-                    set validationVendeur = '1',
+                    set validationVendeur = 1
                     where idcommande = ${req.params.id}`
         db.query(sql, (err, rows, field)=>{
             if(!err){
@@ -154,7 +154,7 @@ module.exports = {
     Validation : (req, res, next) => {
 
         let sql = `update commande
-                    set validation = '1',
+                    set validation = 1
                     where idcommande = ${req.params.id}`
         db.query(sql, (err, rows, field)=>{
             if(!err){
