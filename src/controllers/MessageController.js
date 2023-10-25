@@ -39,11 +39,12 @@ module.exports = {
 
     //Get all msg from discussion 
     get : (req, res, next) => {
-        var sql = `SELECT message.idmessage, message.time,message.status,message.envoyeur,message.receveur,message.msg,
-        concat( user.nom,' ',user.prenom) as nomreceveur, user.photoProfil
-        FROM message 
-        inner join user  on receveur = user.iduser where (envoyeur = ${req.params.idSend} and receveur= ${req.params.idReceive}) or (receveur = ${req.params.idSend} and envoyeur= ${req.params.idReceive})
-          order by idmessage limit 20`
+        var sql = `SELECT message.idmessage,message.time,message.msg,message.envoyeur,message.receveur,message.status,
+        concat( user.nom,' ',user.prenom) as nomenvoyeur, user.photoProfil
+        from message 
+        inner JOIN user on user.iduser = message.envoyeur
+        where(envoyeur=${req.params.idSend} and receveur=${req.params.idReceive}) or (envoyeur=${req.params.idReceive} and receveur=${req.params.idSend})
+        order by idmessage desc LIMIT 20`
         db.query(sql, (err, rows, field) => {
             if (!err) {
                 res.send(rows)
