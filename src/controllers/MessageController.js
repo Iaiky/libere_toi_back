@@ -44,7 +44,7 @@ module.exports = {
         from message 
         inner JOIN user on user.iduser = message.envoyeur
         where(envoyeur=${req.params.idSend} and receveur=${req.params.idReceive}) or (envoyeur=${req.params.idReceive} and receveur=${req.params.idSend})
-        order by idmessage desc LIMIT 20`
+        order by idmessage LIMIT 20`
         db.query(sql, (err, rows, field) => {
             if (!err) {
                 res.send(rows)
