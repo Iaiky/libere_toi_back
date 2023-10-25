@@ -15,11 +15,20 @@ module.exports = {
     },
 
     getMP : (req, res, next) => {
-        var sql = `SELECT message.idmessage, message.receveur, message.msg, message.time, concat( user.nom,' ',usr.prenom) as nom, us.photoProfil FROM message 
-            inner join user as user on receveur = user.iduser 
-            inner join user as usr on receveur = usr.iduser
-            inner join user as us on receveur = usr.iduser
-            where envoyeur = ${req.params.id} group by receveur`
+        var sql = `SELECT m1.idmessage, m1.envoyeur, m1.receveur, m1.time, m1.msg, 
+        concat( user.nom,' ',user.prenom) as nomEnvoyeur,concat( usr.nom,' ',usr.prenom) as nomReceveur,
+        user.photoProfil as photoEnvoyeur, usr.photoProfil as photoReceveur
+        FROM message m1
+                    inner join user as user on envoyeur = user.iduser 
+                    inner join user as usr on receveur = usr.iduser
+        WHERE (m1.receveur = ${req.params.id} OR m1.envoyeur = ${req.params.id})
+        AND m1.idmessage = (
+            SELECT MAX(m2.idmessage)
+            FROM message m2
+            WHERE m2.receveur = m1.receveur AND m2.envoyeur = m1.envoyeur
+        )
+        GROUP BY (m1.envoyeur+m1.receveur)
+        ORDER BY m1.idmessage DESC;`
         db.query(sql, (err, rows, field) => {
             if (!err) {
                 res.send(rows)
