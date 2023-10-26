@@ -3,7 +3,7 @@ var db = require("../configs/connect")
 // Get all user 
 module.exports = {
     getAll : (req, res, next) => {
-        var sql = "select * from user where CIN_Passeport != 0"
+        var sql = "select * from user where type=3"
         var params = []
         db.query(sql, params, (err, rows, field) => {
             if (!err) {
