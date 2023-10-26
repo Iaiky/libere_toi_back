@@ -49,7 +49,7 @@ module.exports = {
 
     //liste 
     categorie : (req, res, next) => {
-        var sql = `Select service.idservice, service.titre, service.description, service.prix, service.delai, service.consigne, service.image_source, categorie.titre as categorie, user.prenom 
+        var sql = `Select service.idservice, service.titre, service.description, service.prix, service.delai, service.consigne, service.image_source, categorie.titre as categorie, user.prenom, user.iduser 
         from ((service 
             inner join categorie on service.idcategorie = categorie.categorie)
             inner join user on service.idvendeur = user.iduser) 
