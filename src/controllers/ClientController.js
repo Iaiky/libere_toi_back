@@ -5,7 +5,7 @@ var db = require("../configs/connect")
 // Get all user
 module.exports = {
     getAll : (req, res, next) => {
-        var sql = "select * from user where type = 2"
+        var sql = "select * from user where type = 2 order by iduser desc"
         var params = []
         db.query(sql, params, (err, rows, field) => {
             if (!err) {
