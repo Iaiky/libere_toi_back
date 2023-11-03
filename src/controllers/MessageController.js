@@ -25,7 +25,7 @@ module.exports = {
         AND m1.idmessage = (
             SELECT MAX(m2.idmessage)
             FROM message m2
-            WHERE m2.receveur = m1.receveur AND m2.envoyeur = m1.envoyeur
+            WHERE (m2.receveur = m1.receveur AND m2.envoyeur = m1.envoyeur) OR (m2.receveur = m1.envoyeur AND m2.envoyeur = m1.receveur)
         )
         GROUP BY (m1.envoyeur+m1.receveur)
         ORDER BY m1.idmessage DESC;`
