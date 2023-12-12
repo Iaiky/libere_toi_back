@@ -1,33 +1,24 @@
 // Create express app
-const express = require('express')
-const app = express()
+const { createServer } = require('http');
+const express = require('express');
+const { json, send } = require('micro');
+const microCors = require('micro-cors');
+
+const app = express();
 
 var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// let cors = require("cors");
-// app.use(cors());
-
-// // Express middleware to allow CORS
-// app.use(function(req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//   next();
-// });
-
-// CORS middleware
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  if (req.method === 'OPTIONS') {
-    res.sendStatus(200);
-  } else {
-    next();
-  }
+// Replace cors middleware with micro-cors
+const cors = microCors({
+  allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
+  origin: '*', // Change this to your frontend URL in production
 });
+
+// Express middleware to allow CORS
+app.use(cors);
 
 // multer
 const multer = require('multer')
@@ -92,8 +83,16 @@ app.get('/', (req, res) => {
 })
 
 // Default response for any other request
-app.use(function(req, res){
-  res.status(404);
-})
+app.use((req, res) => {
+  res.status(404).json({ error: 'Route not found' });
+});
 
-export default app;
+// Convert Express app to a serverless function for Vercel
+module.exports = (req, res) => {
+  if (req.method === 'OPTIONS') {
+    // Handling preflight requests
+    return send(res, 200, 'Preflight accepted');
+  }
+
+  return app(req, res);
+};
